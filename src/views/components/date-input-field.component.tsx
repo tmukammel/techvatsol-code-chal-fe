@@ -15,9 +15,6 @@ const DateInputField = (props: {
 	date: Dayjs | null;
 	changeHandler: (value: Dayjs | null) => void;
 }) => {
-	console.log('dayjs.utc(props.date).format()');
-	console.log(dayjs.utc(props.date).format());
-
 	const [value, setValue] = React.useState<Dayjs | null>(dayjs.utc(props.date));
 
 	const handleChange = (newValue: Dayjs | null) => {
