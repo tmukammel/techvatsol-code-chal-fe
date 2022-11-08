@@ -6,7 +6,7 @@ import DateInputField from '../components/date-input-field.component';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import dayjs, { Dayjs } from 'dayjs';
-import axios from 'axios';
+import { EventsAPI } from '../../http/events';
 
 const EventEditForm = (props: {
 	name?: string;
@@ -25,10 +25,8 @@ const EventEditForm = (props: {
 		console.log(nameState);
 		console.log(locationState);
 		console.log(dateState?.format('MMM DD, YYYY - HH:mm:ss Z'));
-		const res = await axios.post('http://127.0.01:3005/api/events', {
-			name: nameState,
-			location: locationState,
-			date: dateState
+		const res = await EventsAPI.createEvent({
+			data: { name: nameState, location: locationState, date: dateState }
 		});
 
 		console.log(res);
