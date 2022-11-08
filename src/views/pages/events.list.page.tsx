@@ -4,7 +4,7 @@ import Background from '../components/background.component';
 import PageContent from '../components/page-content.component';
 import Header from '../components/header.component';
 import BasicTable from '../components/basic-table.component';
-import { EventsAPI } from '../../http/events';
+import { getEvents, deleteEvent } from '../../services/events';
 import Snackbar from '@mui/material/Snackbar';
 
 import dayjs from 'dayjs';
@@ -13,33 +13,7 @@ dayjs.extend(utc);
 
 const columnHeaders = ['NAME', 'LOCATION', 'DATE', 'ACTION'];
 
-const getEvents = async (params: any) => {
-	try {
-		const data = await EventsAPI.getEvents(params);
-		return data;
-	} catch (error) {
-		return null;
-	}
-};
-
-const deleteEvent = async (id: number) => {
-	try {
-		const data = await EventsAPI.deleteEvent({ id });
-		return data;
-	} catch (error) {
-		return null;
-	}
-};
-
 export default function List() {
-	// page size
-	//  set number of entries
-	//  default number of entries
-	// column headers
-	// get events for n'th page
-	// handle edit
-	// handle delete
-
 	const [pageSize, setPageSize] = useState(PAGE_SIZE_CONFIG[0]);
 	const [pageCursor, setPageCursor] = useState(1);
 	const [events, setEvents] = useState([]);

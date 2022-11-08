@@ -5,27 +5,32 @@ import PageContent from '../components/page-content.component';
 import Header from '../components/header.component';
 import EventEditForm from '../components/event-edit-form.component';
 import { useParams } from 'react-router-dom';
-import { EventsAPI } from '../../http/events';
+import { getEvent } from '../../services/events';
 
 export default function Edit() {
 	const { id } = useParams();
 
 	const [formData, setFormData] = useState({});
 	const [formType, setFormType] = useState(TEXT_CONFIG.btn_event_create);
+	const [formSubTitle, setFormSubTitle] = useState(
+		TEXT_CONFIG.lbl_create_an_event
+	);
 
 	useEffect(() => {
 		if (parseInt(id ?? '') > 0) {
 			setFormType(TEXT_CONFIG.btn_event_edit);
+			setFormSubTitle(TEXT_CONFIG.lbl_edit_an_event);
 			(async () => {
-				const data = await EventsAPI.getEvent({ id });
-				console.log(data);
+				const data = await getEvent(parseInt(id ?? ''));
 
-				setFormData({
-					id,
-					name: data.data?.data?.name,
-					location: data.data?.data?.location,
-					date: data.data?.data?.date
-				});
+				if (data) {
+					setFormData({
+						id,
+						name: data.data?.data?.name,
+						location: data.data?.data?.location,
+						date: data.data?.data?.date
+					});
+				}
 			})();
 		}
 	}, []);
@@ -35,7 +40,7 @@ export default function Edit() {
 			<PageContent>
 				<Header
 					title={TEXT_CONFIG.lbl_title_header}
-					subTitle={TEXT_CONFIG.lbl_create_an_event}
+					subTitle={formSubTitle}
 					buttonTitle={TEXT_CONFIG.btn_back}
 					// href="javascript:history.back()"
 					href="back"

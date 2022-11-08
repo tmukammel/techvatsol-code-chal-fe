@@ -10,7 +10,7 @@ const PageContent = (props: {
 				bgcolor: 'background.paper',
 				width: '90%',
 				borderRadius: 2,
-				boxShadow: '1px 2px #F3F3F3',
+				boxShadow: '2px 3px #F3F3F3',
 				display: 'flex',
 				flexDirection: 'column',
 				alignItems: 'center',

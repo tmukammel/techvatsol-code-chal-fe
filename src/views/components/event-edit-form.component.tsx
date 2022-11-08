@@ -6,36 +6,8 @@ import DateInputField from '../components/date-input-field.component';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import dayjs, { Dayjs } from 'dayjs';
-import { EventsAPI } from '../../http/events';
+import { createEvent, updateEvent } from '../../services/events';
 import Snackbar from '@mui/material/Snackbar';
-
-const handleEdit = async (
-	id: number,
-	name: string,
-	location: string,
-	date: string
-) => {
-	try {
-		const data = await EventsAPI.updateEvent({
-			id,
-			data: { name, location, date }
-		});
-		return data;
-	} catch (error) {
-		return null;
-	}
-};
-
-const handleCreate = async (name: string, location: string, date: string) => {
-	try {
-		const data = await EventsAPI.createEvent({
-			data: { name, location, date }
-		});
-		return data;
-	} catch (error) {
-		return null;
-	}
-};
 
 const EventEditForm = (props: {
 	id?: number;
@@ -55,7 +27,7 @@ const EventEditForm = (props: {
 	const submitHandler = async () => {
 		let data = null;
 		if (props.buttonTitle === 'Create') {
-			data = await handleCreate(
+			data = await createEvent(
 				nameState,
 				locationState,
 				dayjs.utc(dateState).format() || ''
@@ -64,7 +36,7 @@ const EventEditForm = (props: {
 				data !== null ? 'Event created successfully' : 'Event creation failed'
 			);
 		} else {
-			data = await handleEdit(
+			data = await updateEvent(
 				props.id ?? 0,
 				nameState,
 				locationState,

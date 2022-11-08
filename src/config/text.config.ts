@@ -2,6 +2,7 @@ export const TEXT_CONFIG = Object.freeze({
 	lbl_title_header: 'Events',
 	lbl_list_of_events: 'List of events! -',
 	lbl_create_an_event: 'Create an event! -',
+	lbl_edit_an_event: 'Edit an event! -',
 	lbl_page_size_show: 'Show',
 	lbl_page_size_entries: 'entries',
 	btn_back: 'Back',
