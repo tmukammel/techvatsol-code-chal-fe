@@ -21,6 +21,9 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Divider from '@mui/material/Divider';
+import dayjs, { Dayjs } from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+dayjs.extend(utc);
 
 const getTableInfo = (
 	pageNumber: number,
@@ -151,7 +154,9 @@ const BasicTable = (props: {
 									>
 										<TableCell align="left">{row.name}</TableCell>
 										<TableCell align="left">{row.location}</TableCell>
-										<TableCell align="left">{row.date}</TableCell>
+										<TableCell align="left">
+											{dayjs.utc(row.date).format('MMM DD, YYYY - HH:mm:ss') + ' UTC'}
+										</TableCell>
 										<TableCell align="left">
 											<Stack direction="row" spacing={1}>
 												<a href={`/event/${row.id}`} style={{ textDecoration: 'none' }}>
