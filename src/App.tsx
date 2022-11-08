@@ -9,7 +9,8 @@ export default function App() {
 			<div>
 				<Routes>
 					<Route path="/" element={<List />} />
-					<Route path="/edit" element={<Edit />} />
+					<Route path="/event" element={<Edit />} />
+					<Route path="/event/:id" element={<Edit />} />
 				</Routes>
 			</div>
 		</Router>

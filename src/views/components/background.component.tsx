@@ -10,7 +10,7 @@ const Background = (props: {
 			<Box
 				sx={{
 					bgcolor: 'background.default',
-					height: '100vh',
+					minHeight: '100vh',
 					display: 'flex',
 					alignItems: 'center',
 					justifyContent: 'center'

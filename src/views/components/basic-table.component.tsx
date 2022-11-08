@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import InputField from './input-field.component';
@@ -22,24 +22,56 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Divider from '@mui/material/Divider';
 
+const getTableInfo = (
+	pageNumber: number,
+	pageSize: number,
+	totalCount: number
+) => {
+	return {
+		from: pageSize * (pageNumber - 1) + 1,
+		to: Math.min(pageNumber * pageSize, totalCount),
+		of: totalCount
+	};
+};
+
 const BasicTable = (props: {
 	pageSizeConfig: number[];
-	pageSize: number;
-	offset: number;
 	columnHeaders: string[];
+	pageSize: number;
+	pageNumber: number;
+	totalCount: number;
 	data?: any[] | null;
+	pageChangeHandler: (page: number) => void;
+	pageSizeChangeHandler: (size: number) => void;
+	deleteHandler: (id: number) => void;
 }) => {
 	const [size, setSize] = React.useState(props.pageSize);
+	const [pageCursor, setPageCursor] = React.useState(props.pageNumber);
+	const [tableInfo, setTableInfo] = React.useState(
+		getTableInfo(props.pageNumber, props.pageSize, props.totalCount)
+	);
 
-	const handleChange = (event: SelectChangeEvent) => {
+	const handlePageSizeChange = (event: SelectChangeEvent) => {
 		setSize(parseInt(event.target.value));
+		props.pageSizeChangeHandler(parseInt(event.target.value));
 	};
 
-	const handleEdit = () => {
-		console.log('Edit');
+	const handlePageCursorChange = (
+		event: React.ChangeEvent<unknown>,
+		value: number
+	) => {
+		setPageCursor(value);
+		props.pageChangeHandler(value);
 	};
-	const handleDelete = () => {
-		console.log('Delete');
+
+	useEffect(() => {
+		setTableInfo(
+			getTableInfo(props.pageNumber, props.pageSize, props.totalCount)
+		);
+	}, [props.data]);
+
+	const handleDelete = (eventId: number) => {
+		props.deleteHandler(eventId);
 	};
 
 	return (
@@ -76,7 +108,7 @@ const BasicTable = (props: {
 								labelId="demo-simple-select-label"
 								id="demo-simple-select"
 								value={size + ''}
-								onChange={handleChange}
+								onChange={handlePageSizeChange}
 							>
 								{props.pageSizeConfig &&
 									props.pageSizeConfig.map((pageSize) => (
@@ -122,16 +154,12 @@ const BasicTable = (props: {
 										<TableCell align="left">{row.date}</TableCell>
 										<TableCell align="left">
 											<Stack direction="row" spacing={1}>
-												<a
-													href={'/edit'}
-													onClick={() => handleEdit()}
-													style={{ textDecoration: 'none' }}
-												>
+												<a href={`/event/${row.id}`} style={{ textDecoration: 'none' }}>
 													Edit
 												</a>
 												<a
 													href={'#'}
-													onClick={() => handleDelete()}
+													onClick={() => handleDelete(row.id)}
 													style={{ textDecoration: 'none' }}
 												>
 													Delete
@@ -154,11 +182,16 @@ const BasicTable = (props: {
 						color: 'text.secondary'
 					}}
 				>
-					<Typography variant="body1">Showing 1 to 5 of 100 results</Typography>
+					<Typography variant="body1">
+						Showing <b>{tableInfo.from}</b> to <b>{tableInfo.to}</b> of{' '}
+						<b>{tableInfo.of}</b> results
+					</Typography>
 					<Pagination
-						count={props.data ? Math.ceil(props.data?.length / size) : 0}
+						count={props.data ? Math.ceil(props.totalCount / size) : 0}
 						variant="outlined"
 						shape="rounded"
+						page={pageCursor}
+						onChange={handlePageCursorChange}
 					/>
 				</Box>
 			</Box>
