@@ -8,12 +8,13 @@ import EventEditForm from '../components/event-edit-form.component';
 export default function Edit() {
 	return (
 		<Background>
-			<PageContent height="55%">
+			<PageContent>
 				<Header
 					title={TEXT_CONFIG.lbl_title_header}
 					subTitle={TEXT_CONFIG.lbl_create_an_event}
 					buttonTitle={TEXT_CONFIG.btn_back}
-					href="javascript:history.back()"
+					// href="javascript:history.back()"
+					href="back"
 				/>
 				<EventEditForm buttonTitle={TEXT_CONFIG.btn_event_create} />
 			</PageContent>

@@ -6,7 +6,8 @@ import TextField from '@mui/material/TextField';
 const InputField = (props: {
 	label?: string;
 	placeholder?: string;
-	text?: string;
+	value?: string;
+	changeHandler: (value: string) => void;
 }) => {
 	return (
 		<Stack spacing={0}>
@@ -20,7 +21,13 @@ const InputField = (props: {
 			>
 				{props.label}
 			</Typography>
-			<TextField required id="outlined-required" placeholder={props.placeholder} />
+			<TextField
+				required
+				id="outlined-required"
+				placeholder={props.placeholder}
+				value={props.value}
+				onChange={(e) => props.changeHandler(e.target.value)}
+			/>
 		</Stack>
 	);
 };

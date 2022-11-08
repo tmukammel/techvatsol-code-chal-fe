@@ -3,11 +3,29 @@ import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
+import { useNavigate } from 'react-router-dom';
 
 export type mouseEventHandlerParam = React.MouseEvent<
 	HTMLButtonElement,
 	MouseEvent
 >;
+
+const NavLink = (props: { nav: string; buttonTitle: string }) => {
+	const history = useNavigate();
+	if (props.nav === 'back') {
+		return (
+			<a href={'#'} onClick={() => history(-1)} style={{ textDecoration: 'none' }}>
+				{props.buttonTitle}
+			</a>
+		);
+	} else {
+		return (
+			<a href={props.nav} style={{ textDecoration: 'none' }}>
+				{props.buttonTitle}
+			</a>
+		);
+	}
+};
 
 const Header = (props: {
 	title?: string;
@@ -24,7 +42,7 @@ const Header = (props: {
 		>
 			<Stack spacing={0}>
 				<Typography
-					variant="h2"
+					variant="h4"
 					sx={{
 						paddingTop: '2.5vh',
 						paddingBottom: '1vh',
@@ -44,9 +62,7 @@ const Header = (props: {
 					}}
 				>
 					<Typography variant="body1">{props.subTitle}</Typography>
-					<a href={props.href} style={{ textDecoration: 'none' }}>
-						{props.buttonTitle}
-					</a>
+					<NavLink nav={props.href || '/'} buttonTitle={props.buttonTitle || ''} />
 				</Stack>
 			</Stack>
 			<Divider sx={{ color: 'lightgray' }} />

@@ -2,17 +2,24 @@ import React from 'react';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
-import { Dayjs } from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 const DateInputField = (props: {
 	label?: string;
 	placeholder?: string;
-	text?: string;
+	date: Dayjs | null;
+	changeHandler: (value: Dayjs | null) => void;
 }) => {
-	const [value, setValue] = React.useState<Dayjs | null>(null);
+	const [value, setValue] = React.useState<Dayjs | null>(props.date);
+
+	const handleChange = (newValue: Dayjs | null) => {
+		setValue(newValue);
+		props.changeHandler(newValue);
+	};
+
 	return (
 		<Stack spacing={0}>
 			<Typography
@@ -26,12 +33,10 @@ const DateInputField = (props: {
 				{props.label}
 			</Typography>
 			<LocalizationProvider dateAdapter={AdapterDayjs}>
-				<DatePicker
+				<DateTimePicker
 					value={value}
-					onChange={(newValue: any) => {
-						setValue(newValue);
-					}}
-					renderInput={(params: any) => <TextField {...params} />}
+					onChange={handleChange}
+					renderInput={(params) => <TextField {...params} />}
 				/>
 			</LocalizationProvider>
 		</Stack>

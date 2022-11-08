@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/system';
+import { createTheme } from '@mui/material/styles';
 import { ThemeOptions } from './main.theme.types';
 import { THEME_CONFIG } from '../config/theme.config';
 

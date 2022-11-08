@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import InputField from '../components/input-field.component';
 import DateInputField from '../components/date-input-field.component';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
+import dayjs, { Dayjs } from 'dayjs';
+import axios from 'axios';
 
 const EventEditForm = (props: {
 	name?: string;
@@ -13,9 +15,32 @@ const EventEditForm = (props: {
 	actionType?: string;
 	buttonTitle?: string;
 }) => {
+	const [nameState, setNameState] = useState(props.name || '');
+	const [locationState, setLocationState] = useState(props.location || '');
+	const [dateState, setDateState] = useState<Dayjs | null>(
+		dayjs(props.date) || null
+	);
+
+	const submitHandler = async () => {
+		console.log(nameState);
+		console.log(locationState);
+		console.log(dateState?.format('MMM DD, YYYY - HH:mm:ss Z'));
+		const res = await axios.post('http://127.0.01:3005/api/events', {
+			name: nameState,
+			location: locationState,
+			date: dateState
+		});
+
+		console.log(res);
+	};
+
+	const dateChangedHandler = (date: Dayjs | null) => {
+		setDateState(date);
+	};
+
 	return (
 		<Stack
-			spacing={1}
+			spacing={2}
 			sx={{
 				// bgcolor: 'blue',
 				width: '100%',
@@ -32,13 +57,28 @@ const EventEditForm = (props: {
 			>
 				<Grid container spacing={2}>
 					<Grid item xs={12}>
-						<InputField label="Name" placeholder="Event name" />
+						<InputField
+							label="Name"
+							placeholder="Event name"
+							value={nameState}
+							changeHandler={setNameState}
+						/>
 					</Grid>
 					<Grid item xs={8}>
-						<InputField label="Location" placeholder="Event location" />
+						<InputField
+							label="Location"
+							placeholder="Event location"
+							value={locationState}
+							changeHandler={setLocationState}
+						/>
 					</Grid>
 					<Grid item xs={4}>
-						<DateInputField label="Date" placeholder="Event date" />
+						<DateInputField
+							label="Date"
+							placeholder="Event date"
+							date={dateState}
+							changeHandler={dateChangedHandler}
+						/>
 					</Grid>
 				</Grid>
 			</Box>
@@ -59,6 +99,7 @@ const EventEditForm = (props: {
 						marginBottom: '2.5vh',
 						marginRight: '3.5vh'
 					}}
+					onClick={submitHandler}
 				>
 					{props.buttonTitle}
 				</Button>
