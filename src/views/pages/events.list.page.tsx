@@ -4,11 +4,14 @@ import Background from '../components/background.component';
 import PageContent from '../components/page-content.component';
 import Header from '../components/header.component';
 import BasicTable from '../components/basic-table.component';
-import { Event } from '../../models/event';
 import { EventsAPI } from '../../http/events';
 import Snackbar from '@mui/material/Snackbar';
 
-const columnHeaders = ['Name', 'Location', 'Date', 'Action'];
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+dayjs.extend(utc);
+
+const columnHeaders = ['NAME', 'LOCATION', 'DATE', 'ACTION'];
 
 const getEvents = async (params: any) => {
 	try {

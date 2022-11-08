@@ -6,13 +6,8 @@ import DateInputField from '../components/date-input-field.component';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import dayjs, { Dayjs } from 'dayjs';
-import utc from 'dayjs/plugin/utc';
 import { EventsAPI } from '../../http/events';
-import Alert from '@mui/material/Alert';
-import IconButton from '@mui/material/IconButton';
-import Collapse from '@mui/material/Collapse';
 import Snackbar from '@mui/material/Snackbar';
-dayjs.extend(utc);
 
 const handleEdit = async (
 	id: number,

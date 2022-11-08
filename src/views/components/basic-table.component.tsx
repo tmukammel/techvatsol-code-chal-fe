@@ -1,29 +1,19 @@
 import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import InputField from './input-field.component';
-import DateInputField from './date-input-field.component';
-import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { Event } from '../../models/event';
-import PaginationItem from '@mui/material/PaginationItem';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import Pagination from '@mui/material/Pagination';
-import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Divider from '@mui/material/Divider';
-import dayjs, { Dayjs } from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-dayjs.extend(utc);
+import dayjs from 'dayjs';
 
 const getTableInfo = (
 	pageNumber: number,
@@ -139,7 +129,7 @@ const BasicTable = (props: {
 							<TableRow>
 								{props.columnHeaders &&
 									props.columnHeaders.map((name) => (
-										<TableCell key={name} align="left">
+										<TableCell key={name} align="left" sx={{ color: 'text.secondary' }}>
 											{name}
 										</TableCell>
 									))}
