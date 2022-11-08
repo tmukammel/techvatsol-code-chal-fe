@@ -35,6 +35,13 @@ const BasicTable = (props: {
 		setSize(parseInt(event.target.value));
 	};
 
+	const handleEdit = () => {
+		console.log('Edit');
+	};
+	const handleDelete = () => {
+		console.log('Delete');
+	};
+
 	return (
 		<Stack
 			spacing={0}
@@ -110,12 +117,27 @@ const BasicTable = (props: {
 										key={row.id}
 										sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
 									>
-										<TableCell component="th" scope="row">
-											{row.name}
-										</TableCell>
+										<TableCell align="left">{row.name}</TableCell>
 										<TableCell align="left">{row.location}</TableCell>
 										<TableCell align="left">{row.date}</TableCell>
-										<TableCell align="left">Action</TableCell>
+										<TableCell align="left">
+											<Stack direction="row" spacing={1}>
+												<a
+													href={'/edit'}
+													onClick={() => handleEdit()}
+													style={{ textDecoration: 'none' }}
+												>
+													Edit
+												</a>
+												<a
+													href={'#'}
+													onClick={() => handleDelete()}
+													style={{ textDecoration: 'none' }}
+												>
+													Delete
+												</a>
+											</Stack>
+										</TableCell>
 									</TableRow>
 								))}
 						</TableBody>
